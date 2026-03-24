@@ -1,0 +1,33 @@
+/**
+ * VincoCRM Admin Styles
+ *
+ * @package VincoCRM
+ */
+
+/* ── Settings page layout ──────────────────────────────────────────────── */
+
+.vincocrm-settings-wrap {
+	max-width: 780px;
+}
+
+.vincocrm-settings-wrap h1 {
+	display: flex;
+	align-items: center;
+	gap: 10px;
+}
+
+.vincocrm-logo {
+	height: 32px;
+	width: auto;
+	vertical-align: middle;
+}
+
+/* ── Form elements ─────────────────────────────────────────────────────── */
+
+.vincocrm-settings-wrap .form-table th {
+	padding-top: 16px;
+}
+
+.vincocrm-settings-wrap select[multiple] {
+	min-width: 220px;
+}
