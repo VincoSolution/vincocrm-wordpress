@@ -1,0 +1,77 @@
+##
+# Docker Compose for VincoCRM plugin E2E tests.
+#
+# Spins up WordPress 6.9 + WooCommerce 10.6 + MariaDB.
+# Plugin is mounted read-only from the host.
+#
+# Usage:
+#   cd tests/
+#   docker compose up -d
+#   docker compose exec wordpress wp plugin activate vincocrm
+#   npx playwright test --config=playwright.config.ts
+#   docker compose down
+##
+
+services:
+  db:
+    image: mariadb:11
+    restart: unless-stopped
+    environment:
+      MARIADB_ROOT_PASSWORD: rootpassword
+      MARIADB_DATABASE: wordpress_test
+      MARIADB_USER: wp_user
+      MARIADB_PASSWORD: wp_password
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "healthcheck.sh", "--connect", "--innodb_initialized"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  wordpress:
+    image: wordpress:6.9-php8.2-apache
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    ports:
+      - "8080:80"
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress_test
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_password
+      WORDPRESS_DEBUG: "true"
+    volumes:
+      # Mount plugin source.
+      - ../:/var/www/html/wp-content/plugins/vincocrm:ro
+      # WP-CLI setup script.
+      - ./setup-wp.sh:/usr/local/bin/setup-wp.sh:ro
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost/wp-login.php"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  # One-shot container to run WP-CLI setup after WordPress is ready.
+  setup:
+    image: wordpress:cli-2.11-php8.2
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    user: "33:33" # www-data
+    environment:
+      WORDPRESS_DB_HOST: db
+      WORDPRESS_DB_NAME: wordpress_test
+      WORDPRESS_DB_USER: wp_user
+      WORDPRESS_DB_PASSWORD: wp_password
+    volumes:
+      - wordpress_data:/var/www/html
+      - ../:/var/www/html/wp-content/plugins/vincocrm:ro
+      - ./setup-wp.sh:/setup-wp.sh:ro
+    entrypoint: ["bash", "/setup-wp.sh"]
+
+volumes:
+  db_data:
+  wordpress_data:

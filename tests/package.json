@@ -1,0 +1,20 @@
+{
+    "name": "vincocrm-e2e-tests",
+    "version": "1.0.0",
+    "private": true,
+    "description": "E2E tests for VincoCRM WordPress plugin",
+    "scripts": {
+        "test": "npx playwright test --config=playwright.config.ts",
+        "test:headed": "npx playwright test --config=playwright.config.ts --headed",
+        "test:debug": "npx playwright test --config=playwright.config.ts --debug",
+        "test:report": "npx playwright show-report",
+        "docker:up": "docker compose up -d && echo 'Waiting for setup...' && sleep 30",
+        "docker:down": "docker compose down -v",
+        "docker:reset": "docker compose down -v && docker compose up -d && sleep 30",
+        "e2e": "npm run docker:up && npx playwright test --config=playwright.config.ts; npm run docker:down"
+    },
+    "devDependencies": {
+        "@playwright/test": "^1.52.0",
+        "typescript": "^5.7.0"
+    }
+}

@@ -1,0 +1,182 @@
+/**
+ * VincoCRM Frontend Form Styles
+ *
+ * Clean, accessible, responsive form styles.
+ * No jQuery dependency. Scoped to .vincocrm-contact-form.
+ *
+ * @package VincoCRM
+ */
+
+.vincocrm-contact-form {
+    max-width: 600px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.vincocrm-contact-form *,
+.vincocrm-contact-form *::before,
+.vincocrm-contact-form *::after {
+    box-sizing: border-box;
+}
+
+/* ── Fields ── */
+
+.vincocrm-form-field {
+    margin-bottom: 18px;
+}
+
+.vincocrm-form-field--half {
+    display: inline-block;
+    width: calc(50% - 8px);
+    vertical-align: top;
+}
+
+.vincocrm-form-field--half:nth-child(even) {
+    margin-left: 16px;
+}
+
+.vincocrm-contact-form label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 5px;
+    color: #1e1e1e;
+    font-size: 14px;
+}
+
+.vincocrm-required {
+    color: #d63638;
+}
+
+.vincocrm-contact-form input[type="text"],
+.vincocrm-contact-form input[type="email"],
+.vincocrm-contact-form input[type="tel"],
+.vincocrm-contact-form textarea,
+.vincocrm-contact-form select {
+    width: 100%;
+    padding: 10px 14px;
+    border: 1px solid #c3c4c7;
+    border-radius: 6px;
+    font-size: 15px;
+    font-family: inherit;
+    line-height: 1.5;
+    color: #1e1e1e;
+    background: #fff;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.vincocrm-contact-form input:focus,
+.vincocrm-contact-form textarea:focus,
+.vincocrm-contact-form select:focus {
+    outline: none;
+    border-color: #2271b1;
+    box-shadow: 0 0 0 2px rgba(34, 113, 177, 0.2);
+}
+
+.vincocrm-contact-form input::placeholder,
+.vincocrm-contact-form textarea::placeholder {
+    color: #a7aaad;
+}
+
+.vincocrm-contact-form textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+.vincocrm-contact-form select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23646970' d='M6 8.825L1.175 4 2.238 2.938 6 6.7l3.762-3.762L10.825 4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+    padding-right: 36px;
+}
+
+/* ── Checkbox ── */
+
+.vincocrm-checkbox {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-weight: 400 !important;
+    cursor: pointer;
+}
+
+.vincocrm-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    flex-shrink: 0;
+}
+
+/* ── Submit ── */
+
+.vincocrm-form-footer {
+    margin-top: 8px;
+}
+
+.vincocrm-form-submit {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 28px;
+    font-size: 15px;
+    font-weight: 600;
+    font-family: inherit;
+    color: #fff;
+    background: #2271b1;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.1s;
+    -webkit-appearance: none;
+    appearance: none;
+}
+
+.vincocrm-form-submit:hover {
+    background: #135e96;
+}
+
+.vincocrm-form-submit:active {
+    transform: scale(0.98);
+}
+
+.vincocrm-form-submit:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+/* ── Messages ── */
+
+.vincocrm-form-message {
+    margin-top: 12px;
+    padding: 0;
+    min-height: 20px;
+    font-size: 14px;
+}
+
+.vincocrm-form-message.vincocrm-form-message--success {
+    color: #00a32a;
+    font-weight: 500;
+}
+
+.vincocrm-form-message.vincocrm-form-message--error {
+    color: #d63638;
+    font-weight: 500;
+}
+
+/* ── Loading ── */
+
+.vincocrm-contact-form.vincocrm-form--loading .vincocrm-form-submit {
+    opacity: 0.7;
+    pointer-events: none;
+}
+
+/* ── Responsive ── */
+
+@media (max-width: 480px) {
+    .vincocrm-form-field--half {
+        width: 100%;
+        margin-left: 0 !important;
+    }
+}
